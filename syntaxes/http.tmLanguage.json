@@ -1,0 +1,58 @@
+{
+    "name": "HTTP",
+    "scopeName": "source.http",
+    "patterns": [
+        {
+            "include": "#request-line"
+        },
+        {
+            "include": "#headers"
+        },
+        {
+            "include": "#javascript-expression"
+        },
+        {
+            "include": "#comments"
+        }
+    ],
+    "repository": {
+        "request-line": {
+            "match": "^(GET|POST|PUT|DELETE|PATCH|HEAD|OPTIONS|TRACE|CONNECT)\\s+([^\\s]+)\\s*(HTTP/[0-9.]+)?$",
+            "captures": {
+                "1": { "name": "keyword.http" },
+                "2": { "name": "string.http" },
+                "3": { "name": "constant.numeric.http" }
+            }
+        },
+        "headers": {
+            "match": "^([^:]+):\\s*(.*)$",
+            "captures": {
+                "1": { "name": "variable.http" },
+                "2": { "name": "string.http" }
+            }
+        },
+        "javascript-expression": {
+            "begin": "<%",
+            "end": "%>",
+            "contentName": "source.js",
+            "patterns": [
+                {
+                    "include": "source.js"
+                }
+            ]
+        },
+        "comments": {
+            "patterns": [
+                {
+                    "match": "#.*$",
+                    "name": "comment.line.http"
+                },
+                {
+                    "begin": "###",
+                    "end": "###",
+                    "name": "comment.block.http"
+                }
+            ]
+        }
+    }
+} 

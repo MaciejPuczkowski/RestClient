@@ -1,0 +1,56 @@
+# This is a sample HTTP request file demonstrating various features
+
+### Get a random user
+GET {{ApiUrl}}/users
+Accept: application/json
+
+> {%
+    client.log("Response received:", response.body);
+    client.global.set("lastResponse", response.body);
+%}
+
+### Create a new user with dynamic data
+POST {{ApiUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{ApiKey}}
+
+{
+    "id": "<% Math.random().toString(36).substr(2, 9) %>",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "createdAt": "<% new Date().toISOString() %>",
+    "metadata": {
+        "clientId": "<% Math.floor(Math.random() * 1000) %>",
+        "source": "api",
+        "region": "{{Region}}"
+    }
+}
+
+### Test different HTTP methods
+
+# Basic GET request
+GET {{ApiUrl}}/status
+Accept: application/json
+
+# PUT request with dynamic ID
+PUT {{ApiUrl}}/users/<% Math.floor(Math.random() * 100) %>
+Content-Type: application/json
+
+{
+    "name": "Updated User",
+    "updateTime": "<% new Date().toISOString() %>"
+}
+
+# DELETE request
+DELETE {{ApiUrl}}/users/123
+
+### Multi-line comments example
+###
+This is a multi-line comment
+You can use it to document your requests
+or add important notes
+###
+
+# Test service health
+GET {{ServiceUrl}}/health
+Accept: application/json 
